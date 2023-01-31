@@ -1,4 +1,5 @@
 import random
+import time
 
 # Define ranks & suits
 ranks = ['A','2','3','4','5','6','7','8','9','10','J','Q','K']
@@ -18,17 +19,16 @@ class person:
 
 # Helper Functions
 
-
 def printCard(rank, suit):
-    print("┌───────┐")
-    print("│{:<5}  │".format(rank))
-    print("├───────┤")
-    print("│       │")
-    print("│   {}   │".format(suit))
-    print("│       │")
-    print("├───────┤")
-    print("│  {:>5}│".format(rank))
-    print("└───────┘")
+    print("┌──────┐")
+    print("│{:<5} │".format(rank))
+    print("├──────┤")
+    print("│      │")
+    print("│  {}   │".format(suit))
+    print("│      │")
+    print("├──────┤")
+    print("│ {:>5}│".format(rank))
+    print("└──────┘")
 
 def createDeck():
     deck = []
@@ -45,9 +45,7 @@ def printHands(dealer,player):
 
         # Print visual of hand
         for card in person.hand:
-            printCard(card.rank,card.suit)
-
-    
+            printCard(card.rank,card.suit)   
 
 def dealCard(person, deck):
     no_of_hand_remaining = len(deck) -1
@@ -56,7 +54,7 @@ def dealCard(person, deck):
     # Apend card to person's hand
     person.hand.append(deck[randomIndex])
 
-    # Append person's value attribute
+    # Update person's value attribute
     rank = deck[randomIndex].rank
     if rank == 'A':
         if person.val <= 10:
@@ -70,8 +68,7 @@ def dealCard(person, deck):
 
     # Remove card from deck
     del deck[randomIndex]
-
-    
+  
 def blackjack():
     # Create new deck
     deck = createDeck()
@@ -88,17 +85,40 @@ def blackjack():
     printHands(dealer,player)
 
     # Initialise whether loser has been found
-    loser_found = False
+    player_lost = False
+    dealer_lost = False
 
     while True:
         choice = input("Would you like to hit or stand? (h/s): ")
         if choice == 'h':
             dealCard(player,deck)
             printHands(dealer,player)
+            if player.val == 21:
+                break
+            elif player.val > 21:
+                print("You Bust!!")
+                player_lost = True
+                break
         else:
             break
 
+    while dealer.val <= 16:
+        dealCard(dealer,deck)
+        printHands(dealer,player)
+        time.sleep(1)
+    
+    if dealer.val > 21:
+        print("Dealer Busts!!")
+        dealer_lost = True
 
-
+    # Print Winner
+    if player_lost or dealer_lost:
+        pass
+    elif dealer.val > player.val:
+        print("Dealer wins!!")
+    elif dealer.val < player.val:
+        print("Player wins!!")
+    else:
+        print("It's a tie!!")
 
 blackjack()
