@@ -48,8 +48,8 @@ def printHands(dealer,player):
             printCard(card.rank,card.suit)   
 
 def dealCard(person, deck):
-    no_of_hand_remaining = len(deck) -1
-    randomIndex = random.randint(0, no_of_hand_remaining)
+    no_of_cards_remaining = len(deck) -1
+    randomIndex = random.randint(0, no_of_cards_remaining)
 
     # Apend card to person's hand
     person.hand.append(deck[randomIndex])
