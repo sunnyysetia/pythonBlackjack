@@ -1,3 +1,4 @@
 * make sure the deck remains constant on each iteration e.g. card taken out in previous round remaind out for next
-* work on being able to print the cards next to each other rather than vertically
 * runnning out of cards in deck. When deck gets low need to restock and create new deck
+
+* hide second card in dealer's original hand

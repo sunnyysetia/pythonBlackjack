@@ -16,19 +16,9 @@ class person:
         self.name = name
         self.hand = []
         self.val = 0
+        self.visual=['','','','','','','','','']
 
 # Helper Functions
-
-def printCard(rank, suit):
-    print("┌──────┐")
-    print("│{:<5} │".format(rank))
-    print("├──────┤")
-    print("│      │")
-    print("│  {}   │".format(suit))
-    print("│      │")
-    print("├──────┤")
-    print("│ {:>5}│".format(rank))
-    print("└──────┘")
 
 def createDeck():
     deck = []
@@ -38,14 +28,16 @@ def createDeck():
     
     return deck
 
-def printHands(dealer,player):
-    for person in [dealer, player]:
-        print("{}'s hand".format(person.name))
-        print("Value: {}".format(person.val))
-
-        # Print visual of hand
-        for card in person.hand:
-            printCard(card.rank,card.suit)   
+def addToVisual(person,card):
+    person.visual[0] += "┌──────┐          "
+    person.visual[1] += "│{:<5} │          ".format(card.rank)
+    person.visual[2] += "├──────┤          "
+    person.visual[3] += "│      │          "
+    person.visual[4] += "│  {}   │          ".format(card.suit)
+    person.visual[5] += "│      │          "
+    person.visual[6] += "├──────┤          "
+    person.visual[7] += "│ {:>5}│          ".format(card.rank)
+    person.visual[8] += "└──────┘          "
 
 def dealCard(person, deck):
     no_of_cards_remaining = len(deck) -1
@@ -66,9 +58,21 @@ def dealCard(person, deck):
     else:
         person.val += int(rank)
 
+    # Add card to person's visual
+    addToVisual(person,deck[randomIndex])
+    
     # Remove card from deck
     del deck[randomIndex]
   
+def printHands(dealer,player):
+    for person in [dealer, player]:
+        print("{}'s hand".format(person.name))
+        print("Value: {}".format(person.val)) 
+
+        for line in person.visual:
+            print(line)
+
+# Main Game
 def blackjack():
     # Create new deck
     deck = createDeck()
@@ -103,9 +107,10 @@ def blackjack():
             break
 
     while dealer.val <= 16:
+        time.sleep(2)
         dealCard(dealer,deck)
         printHands(dealer,player)
-        time.sleep(1)
+        
     
     if dealer.val > 21:
         print("Dealer Busts!!")
@@ -120,5 +125,6 @@ def blackjack():
         print("Player wins!!")
     else:
         print("It's a tie!!")
+
 
 blackjack()
