@@ -28,6 +28,20 @@ class person:
         self.visual=['','','','','','','','','', '     ']
 
 # Helper Functions
+def createHiddenCard():
+    hiddenCard = [
+        "          ┌──────┐",
+        "          │{:<5} │".format('?'),
+        "          ├──────┤",
+        "          │      │",
+        "          │  {}  │".format('??'),
+        "          │      │",
+        "          ├──────┤",
+        "          │ {:>5}│".format('?'),
+        "          └──────┘",
+        " {:^17}".format('?? OF ????')
+    ]
+    return hiddenCard
 
 def createDeck():
     deck = []
@@ -73,19 +87,24 @@ def dealCard(person, deck):
     # Remove card from deck
     deck.remove(card)
   
-def printHands(dealer,player):
+def printHands(dealer,player, hiddenCard):
     print("============")
     for person in [dealer, player]:
         print("\033[4m{}'s hand\033[0m".format(person.name))
         print("Value: \033[1m{}\033[0m".format(person.val)) 
 
-        for line in person.visual:
-            print(line)
+        if len(dealer.hand) == 1 and person == dealer:
+            for i in range(0,9):
+                print(person.visual[i] + hiddenCard[i])
+        else:
+            for line in person.visual:
+                print(line)
 
 # Main Game
 def blackjack():
     # Create new deck
     deck = createDeck()
+    hiddenCard = createHiddenCard()
 
     # Initialise dealer and player as person class
     dealer = person('Dealer')
@@ -93,11 +112,10 @@ def blackjack():
 
     # Initial hand out and print of hands
     dealCard(dealer,deck)
-    dealCard(dealer,deck)
     dealCard(player,deck)
     dealCard(player,deck)
 
-    printHands(dealer,player)
+    printHands(dealer,player, hiddenCard)
 
     # Initialise whether loser has been found
     player_lost = False
@@ -123,7 +141,7 @@ def blackjack():
                 choice = input("Would you like to hit or stand? (h/s): ")
             if choice == 'h':
                 dealCard(player,deck)
-                printHands(dealer,player) 
+                printHands(dealer,player, hiddenCard) 
             else:
                 break
 
@@ -131,7 +149,7 @@ def blackjack():
         print("\033[3mDealer is drawing card..\033[0m")
         time.sleep(2)
         dealCard(dealer,deck)
-        printHands(dealer,player)
+        printHands(dealer,player, hiddenCard)
         
     
     if dealer.val > 21 and player_lost == False:
@@ -139,8 +157,10 @@ def blackjack():
         dealer_lost = True
 
     # Print Winner
-    if player_lost or dealer_lost:
-        pass
+    if player_lost:
+        print("\033[1mDealer wins!!\033[0m")
+    elif dealer_lost:
+        print("\033[1mPlayer wins!!\033[0m")
     elif dealer.val > player.val:
         print("\033[1mDealer wins!!\033[0m")
     elif dealer.val < player.val:
