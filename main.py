@@ -11,12 +11,21 @@ class card:
         self.rank = rank
         self.suit = suit
 
+        if self.suit == '♥️':
+            self.string = '(' + self.rank + ' OF ' + 'HEARTS' + ')'
+        elif self.suit == '♦️':
+            self.string = '(' + self.rank + ' OF ' + 'DIAMONDS' + ')'
+        elif self.suit == '♠️':
+            self.string = '(' + self.rank + ' OF ' + 'SPADES' + ')'
+        else:
+            self.string = '(' + self.rank + ' OF ' + 'CLUBS' + ')'
+
 class person:
     def __init__(self, name):
         self.name = name
         self.hand = []
         self.val = 0
-        self.visual=['','','','','','','','','']
+        self.visual=['','','','','','','','','', '     ']
 
 # Helper Functions
 
@@ -29,15 +38,28 @@ def createDeck():
     return deck
 
 def addToVisual(person,card):
-    person.visual[0] += "┌──────┐          "
-    person.visual[1] += "│{:<5} │          ".format(card.rank)
-    person.visual[2] += "├──────┤          "
-    person.visual[3] += "│      │          "
-    person.visual[4] += "│  {}   │          ".format(card.suit)
-    person.visual[5] += "│      │          "
-    person.visual[6] += "├──────┤          "
-    person.visual[7] += "│ {:>5}│          ".format(card.rank)
-    person.visual[8] += "└──────┘          "
+    
+    
+    # person.visual[0] += "┌──────┐          "
+    # person.visual[1] += "│{:<5} │          ".format(card.rank)
+    # person.visual[2] += "├──────┤          "
+    # person.visual[3] += "│      │          "
+    # person.visual[4] += "│  {}   │          ".format(card.suit)
+    # person.visual[5] += "│      │          "
+    # person.visual[6] += "├──────┤          "
+    # person.visual[7] += "│ {:>5}│          ".format(card.rank)
+    # person.visual[8] += "└──────┘          "
+    # person.visual[9] += "({} {})        ".format(card.rank, suit)
+    person.visual[0] += "          ┌──────┐"
+    person.visual[1] += "          │{:<5} │".format(card.rank)
+    person.visual[2] += "          ├──────┤"
+    person.visual[3] += "          │      │"
+    person.visual[4] += "          │  {}   │".format(card.suit)
+    person.visual[5] += "          │      │"
+    person.visual[6] += "          ├──────┤"
+    person.visual[7] += "          │ {:>5}│".format(card.rank)
+    person.visual[8] += "          └──────┘"
+    person.visual[9] += " {:^17}".format(card.string)
 
 def dealCard(person, deck):
     no_of_cards_remaining = len(deck) -1
@@ -65,8 +87,9 @@ def dealCard(person, deck):
     del deck[randomIndex]
   
 def printHands(dealer,player):
+    print("============")
     for person in [dealer, player]:
-        print("{}'s hand".format(person.name))
+        print("\033[4m{}'s hand\033[0m".format(person.name))
         print("Value: {}".format(person.val)) 
 
         for line in person.visual:
@@ -85,6 +108,7 @@ def blackjack():
     dealCard(dealer,deck)
     dealCard(dealer,deck)
     dealCard(player,deck)
+    dealCard(player,deck)
 
     printHands(dealer,player)
 
@@ -92,19 +116,25 @@ def blackjack():
     player_lost = False
     dealer_lost = False
 
-    while True:
-        choice = input("Would you like to hit or stand? (h/s): ")
-        if choice == 'h':
-            dealCard(player,deck)
-            printHands(dealer,player)
-            if player.val == 21:
-                break
-            elif player.val > 21:
-                print("You Bust!!")
-                player_lost = True
-                break
-        else:
+    while True: 
+        if player.val == 21:
+            if len(player.hand) == 1:
+                print("You got Blackjack!!")
             break
+        elif player.val > 21:
+            print("You Bust!!")
+            player_lost = True
+            break
+        else:
+            choice = input("Would you like to hit or stand? (h/s): ")
+            while choice != 'h' and choice != 's':
+                print("Please input either 'h' or 's'")
+                choice = input("Would you like to hit or stand? (h/s): ")
+            if choice == 'h':
+                dealCard(player,deck)
+                printHands(dealer,player) 
+            else:
+                break
 
     while dealer.val <= 16:
         time.sleep(2)
@@ -112,7 +142,7 @@ def blackjack():
         printHands(dealer,player)
         
     
-    if dealer.val > 21:
+    if dealer.val > 21 and player_lost == False:
         print("Dealer Busts!!")
         dealer_lost = True
 
