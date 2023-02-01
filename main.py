@@ -38,18 +38,6 @@ def createDeck():
     return deck
 
 def addToVisual(person,card):
-    
-    
-    # person.visual[0] += "┌──────┐          "
-    # person.visual[1] += "│{:<5} │          ".format(card.rank)
-    # person.visual[2] += "├──────┤          "
-    # person.visual[3] += "│      │          "
-    # person.visual[4] += "│  {}   │          ".format(card.suit)
-    # person.visual[5] += "│      │          "
-    # person.visual[6] += "├──────┤          "
-    # person.visual[7] += "│ {:>5}│          ".format(card.rank)
-    # person.visual[8] += "└──────┘          "
-    # person.visual[9] += "({} {})        ".format(card.rank, suit)
     person.visual[0] += "          ┌──────┐"
     person.visual[1] += "          │{:<5} │".format(card.rank)
     person.visual[2] += "          ├──────┤"
@@ -62,14 +50,13 @@ def addToVisual(person,card):
     person.visual[9] += " {:^17}".format(card.string)
 
 def dealCard(person, deck):
-    no_of_cards_remaining = len(deck) -1
-    randomIndex = random.randint(0, no_of_cards_remaining)
+    card = random.choice(deck)
 
     # Apend card to person's hand
-    person.hand.append(deck[randomIndex])
+    person.hand.append(card)
 
     # Update person's value attribute
-    rank = deck[randomIndex].rank
+    rank = card.rank
     if rank == 'A':
         if person.val <= 10:
             person.val += 11
@@ -81,16 +68,16 @@ def dealCard(person, deck):
         person.val += int(rank)
 
     # Add card to person's visual
-    addToVisual(person,deck[randomIndex])
+    addToVisual(person,card)
     
     # Remove card from deck
-    del deck[randomIndex]
+    deck.remove(card)
   
 def printHands(dealer,player):
     print("============")
     for person in [dealer, player]:
         print("\033[4m{}'s hand\033[0m".format(person.name))
-        print("Value: {}".format(person.val)) 
+        print("Value: \033[1m{}\033[0m".format(person.val)) 
 
         for line in person.visual:
             print(line)
@@ -116,13 +103,17 @@ def blackjack():
     player_lost = False
     dealer_lost = False
 
+    #initialise whether player has blackjack.
+    blackjack = False
+
     while True: 
         if player.val == 21:
-            if len(player.hand) == 1:
+            if len(player.hand) == 2:
+                blackjack = True
                 print("You got Blackjack!!")
             break
         elif player.val > 21:
-            print("You Bust!!")
+            print("\033[1mYou Bust!!\033[0m")
             player_lost = True
             break
         else:
@@ -136,25 +127,26 @@ def blackjack():
             else:
                 break
 
-    while dealer.val <= 16:
+    while dealer.val <= 16 and blackjack==False:
+        print("\033[3mDealer is drawing card..\033[0m")
         time.sleep(2)
         dealCard(dealer,deck)
         printHands(dealer,player)
         
     
     if dealer.val > 21 and player_lost == False:
-        print("Dealer Busts!!")
+        print("\033[1mDealer Busts!!\033[0m")
         dealer_lost = True
 
     # Print Winner
     if player_lost or dealer_lost:
         pass
     elif dealer.val > player.val:
-        print("Dealer wins!!")
+        print("\033[1mDealer wins!!\033[0m")
     elif dealer.val < player.val:
-        print("Player wins!!")
+        print("\033[1mPlayer wins!!\033[0m")
     else:
-        print("It's a tie!!")
+        print("\033[1mIt's a tie!!\033[0m")
 
 
 blackjack()

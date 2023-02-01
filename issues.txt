@@ -2,5 +2,4 @@
 * runnning out of cards in deck. When deck gets low need to restock and create new deck
 
 * hide second card in dealer's original hand
-* dealer gets bj straight away does player get to continue or aauto loser
-* player gets bj, shouldn't ask h or s
+* ace is 11 or 1
