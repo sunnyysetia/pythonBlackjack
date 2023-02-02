@@ -93,7 +93,7 @@ def printHands(dealer,player, hiddenCard):
         print("Value: \033[1m{}\033[0m".format(person.val)) 
 
         if len(dealer.hand) == 1 and person == dealer:
-            for i in range(0,9):
+            for i in range(0,10):
                 print(person.visual[i] + hiddenCard[i])
         else:
             for line in person.visual:
@@ -102,7 +102,7 @@ def printHands(dealer,player, hiddenCard):
 
 # Main Game
 def blackjack():
-    # Heading made using: 
+    # Heading made using: https://helloacm.com/figlet
 
     print(' ____  _            _     _            _    ')
     print('| __ )| | __ _  ___| | __(_) __ _  ___| | __')
