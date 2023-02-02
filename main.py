@@ -88,7 +88,6 @@ def dealCard(person, deck):
     deck.remove(card)
   
 def printHands(dealer,player, hiddenCard):
-    print("============")
     for person in [dealer, player]:
         print("\033[4m{}'s hand\033[0m".format(person.name))
         print("Value: \033[1m{}\033[0m".format(person.val)) 
@@ -99,9 +98,24 @@ def printHands(dealer,player, hiddenCard):
         else:
             for line in person.visual:
                 print(line)
+    print("============")
 
 # Main Game
 def blackjack():
+    # Heading made using: 
+
+    print(' ____  _            _     _            _    ')
+    print('| __ )| | __ _  ___| | __(_) __ _  ___| | __')
+    print('|  _ \\| |/ _` |/ __| |/ /| |/ _` |/ __| |/ /')
+    print('| |_) | | (_| | (__|   < | | (_| | (__|   < ')
+    print('|____/|_|\\__,_|\\___|_|\\_\\/ |\\__,_|\\___|_|\\_\\')
+    print('                       |__/')
+
+    print("Rules:\n")
+    print("🧍 Dealer draws to 16 and stands on all 17's")
+    
+    print("============")
+
     # Create new deck
     deck = createDeck()
     hiddenCard = createHiddenCard()
@@ -170,3 +184,4 @@ def blackjack():
 
 
 blackjack()
+

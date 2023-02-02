@@ -1,5 +1,4 @@
 * make sure the deck remains constant on each iteration e.g. card taken out in previous round remaind out for next
 * runnning out of cards in deck. When deck gets low need to restock and create new deck
 
-* hide second card in dealer's original hand
-* ace is 11 or 1
+* ace is 11 or 1 - if player is bout to bust needs to change from 11 to 1
