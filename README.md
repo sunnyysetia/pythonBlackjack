@@ -20,5 +20,4 @@ The game is easy to play, here's a quick step-by-step guide:
 ## Screenshot
 
 This Blackjack game is perfect for those who love to play this classic card game and are looking for a visual experience. Give it a try and have fun!
-
-<img width="493" alt="Screenshot 2023-02-02 at 11 50 08 PM" src="https://user-images.githubusercontent.com/89380644/216304916-1c39aeed-353b-46a0-ae9b-cff262e928e6.png">
+<img width="533" alt="Screenshot 2023-02-02 at 11 52 23 PM" src="https://user-images.githubusercontent.com/89380644/216306119-5fd76b66-e618-451b-b8e8-a41e5b44d9dd.png">
