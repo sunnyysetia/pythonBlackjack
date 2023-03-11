@@ -172,15 +172,15 @@ def blackjack():
 
     # Print Winner
     if player_lost:
-        print("\033[1mDealer wins!!\033[0m")
+        print("\033[1mDealer Wins!!\033[0m")
     elif dealer_lost:
-        print("\033[1mPlayer wins!!\033[0m")
+        print("\033[1mPlayer Wins!!\033[0m")
     elif dealer.val > player.val:
-        print("\033[1mDealer wins!!\033[0m")
+        print("\033[1mDealer Wins!!\033[0m")
     elif dealer.val < player.val:
-        print("\033[1mPlayer wins!!\033[0m")
+        print("\033[1mPlayer Wins!!\033[0m")
     else:
-        print("\033[1mIt's a tie!!\033[0m")
+        print("\033[1mIt's a Tie!!\033[0m")
 
 
 blackjack()
